@@ -40,7 +40,7 @@ Now you're ready to create a cron job to send yourself your status report. The c
 
   /usr/bin/ruby /path/to/script/status.rb | /usr/bin/mail -a "Content-type: text/html;" -s "Status Report: $HOSTNAME" "some@address.com"
 
-You can change the subject to whatever you want and just replace *some@address.com* with the address you want the email sent to. If you want to CC the email to more email addresses you can use the *-c* flag and pass it a comma separated list of email addresses. Running it once per hour is probably not a bad idea, but you can run it as frequently or infrequently as you like!
+You can change the subject to whatever you want and just replace <b>some@address.com</b> with the address you want the email sent to. If you want to CC the email to more email addresses you can use the <b>-c</b> flag and pass it a comma separated list of email addresses. Running it once per hour is probably not a bad idea, but you can run it as frequently or infrequently as you like!
 
 = Conclusion
 
