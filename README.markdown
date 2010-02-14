@@ -16,7 +16,7 @@ This script was primarily written for and tested on DreamHost Private Servers.
 
 To install this script, the first thing you want to do is download a copy of the script to use. To do that, SSH to your PS under the user you want to run the script as and run this command:
 
- curl -s -o status.rb https://gist.github.com/raw/b8d670dfb8bf97a3be9f/7fbcc76a118ac1f24ce144048d816b6b699911b6/status.rb
+ curl -s -o status.rb http://github.com/watsonian/server-status-report/raw/master/status.rb
 
 That will save the script as a file named __status.rb__. The script itself is written in Ruby to take advantage of the [ERB templating system](http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html) to produce the HTML content.
 
@@ -46,6 +46,6 @@ You can change the subject to whatever you want and just replace __some@address.
 
 If you set everything up properly, then you should start getting emails that look roughly like this:
 
-http://wiki.dreamhost.com/images/5/58/Server_status_script_preview.png
+[Screenshot]:http://img.skitch.com/20100214-kcdm52ti59m117hewre9pue72x.jpg
 
 Keep in mind that this script will likely be updated as time progresses. So, if this stops working for you, be sure to check back to see if the script has been updated.
