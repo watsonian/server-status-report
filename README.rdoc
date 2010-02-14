@@ -14,13 +14,13 @@ This script was primarily written for and tested on DreamHost Private Servers.
 
 = Installation
 
-To install this script, the first thing you want to do is download a copy of the script to use. To do that, SSH to your PS under the user you want to run the script as and run this command:
+To install this script, the first thing you want to do is download a copy of the script to use. To do that, SSH to your server under the user you want to run the script as and run this command:
 
- curl -s -o status.rb http://github.com/watsonian/server-status-report/raw/master/status.rb
+  git clone git://github.com/watsonian/server-status-report.git
 
-That will save the script as a file named *status.rb*. The script itself is written in Ruby to take advantage of the {ERB templating system}[http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html] to produce the HTML content.
+The script itself is written in Ruby to take advantage of the {ERB templating system}[http://ruby-doc.org/stdlib/libdoc/erb/rdoc/classes/ERB.html] to produce the HTML content.
 
-Once you've downloaded the script successfully, you need to make sure that the *mailx* package is installed on your PS. To find out, run this command:
+Once you've downloaded the script successfully, you need to make sure that the *mailx* package is installed on your server. To find out, run this command:
 
   dpkg -l | grep mailx
 
