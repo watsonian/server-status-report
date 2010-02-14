@@ -9,7 +9,7 @@
 
 require 'erb'
 
-timestamp = Time.now.strftime("%B %d, %Y @ %H:%M%p %Z")
+timestamp = Time.now.strftime("%B %d, %Y @ %I:%M%p %Z")
 hostname = `hostname`
 load_avg = `uptime | awk -F'average(s)?:' '{print $2}'`
 
