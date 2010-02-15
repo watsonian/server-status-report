@@ -9,6 +9,8 @@
 
 require 'erb'
 
+ENV['COLUMNS'] = '230'
+
 timestamp = Time.now.strftime("%B %d, %Y @ %I:%M%p %Z")
 hostname = `hostname`
 load_avg = `uptime | awk -F'average(s)?:' '{print $2}'`
@@ -29,7 +31,7 @@ open_tcp_connections = `netstat -atun | grep tcp | awk '{print $5}' | cut -d: -f
 top_memory_procs = `ps aux --sort=-rss | head -11`.chomp.strip
 top_cpu_procs = `ps aux --sort=-pcpu | grep -v grep | grep -E "(^([^ ]*?)[ ]*[0-9]*[ ]*(([0-9]{1,2}\.[1-9])|([1-9]{1,2}\.[0-9])))|USER" | head -11`.chomp.strip
 netstat = `netstat -a --tcp | sort`.chomp.strip
-top_snapshot = `COLUMNS=230 && top -c -b -n1`.chomp.strip
+top_snapshot = `top -c -b -n1`.chomp.strip
 
 # Determine graph color
 memused_percent = ((actual_usedmem.to_f / totalmem.to_f) * 100).round
