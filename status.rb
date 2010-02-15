@@ -9,7 +9,7 @@
 
 require 'erb'
 
-ENV['COLUMNS'] = '230'
+ENV['COLUMNS'] = '200'
 
 timestamp = Time.now.strftime("%B %d, %Y @ %I:%M%p %Z")
 hostname = `hostname`
