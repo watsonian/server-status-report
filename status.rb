@@ -7,31 +7,35 @@
 # In Debian, you just need the mailx package installed for the above to work
 # along with Ruby (of course).
 
+require 'rubygems'
+require 'htmlentities'
 require 'erb'
 
 ENV['COLUMNS'] = '200'
 
-timestamp = Time.now.strftime("%B %d, %Y @ %I:%M%p %Z")
-hostname = `hostname`
-load_avg = `uptime | awk -F'average(s)?:' '{print $2}'`
+coder = HTMLEntities.new
+
+timestamp = coder.encode(Time.now.strftime("%B %d, %Y @ %I:%M%p %Z"))
+hostname = coder.encode(`hostname`)
+load_avg = coder.encode(`uptime | awk -F'average(s)?:' '{print $2}'`)
 
 # Memory usage
-totalmem = `free -m | grep Mem: | awk '{print $2}'`.to_i
-usedmem = `free -m | grep Mem: | awk '{print $3}'`.to_i
-cachedmem = `free -m | grep Mem: | awk '{print $7}'`.to_i
-memused = `free -m | grep buffers/cache: | awk '{print $3}'`.to_i
-actual_usedmem = usedmem - cachedmem
-actual_freemem = totalmem - actual_usedmem
+totalmem = coder.encode(`free -m | grep Mem: | awk '{print $2}'`.to_i)
+usedmem = coder.encode(`free -m | grep Mem: | awk '{print $3}'`.to_i)
+cachedmem = coder.encode(`free -m | grep Mem: | awk '{print $7}'`.to_i)
+memused = coder.encode(`free -m | grep buffers/cache: | awk '{print $3}'`.to_i)
+actual_usedmem = coder.encode(usedmem - cachedmem)
+actual_freemem = coder.encode(totalmem - actual_usedmem)
 
-php_procs = `ps -ef | grep -v grep | grep -c php`
-httpd_procs = `ps -ef|grep -v grep|grep -c httpd`
-tcp_connections = `netstat -nat | grep tcp | awk '{ print $5}' | cut -d: -f1 | sed -e '/^$/d' | uniq | wc -l`
+php_procs = coder.encode(`ps -ef | grep -v grep | grep -c php`)
+httpd_procs = coder.encode(`ps -ef|grep -v grep|grep -c httpd`)
+tcp_connections = coder.encode(`netstat -nat | grep tcp | awk '{ print $5}' | cut -d: -f1 | sed -e '/^$/d' | uniq | wc -l`)
 
-open_tcp_connections = `netstat -atun | grep tcp | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' | sort | uniq -c | sort -n`
-top_memory_procs = `ps aux --sort=-rss | head -11`.chomp.strip
-top_cpu_procs = `ps aux --sort=-pcpu | grep -v grep | grep -E "(^([^ ]*?)[ ]*[0-9]*[ ]*(([0-9]{1,2}\.[1-9])|([1-9]{1,2}\.[0-9])))|USER" | head -11`.chomp.strip
-netstat = `netstat -a --tcp | sort`.chomp.strip
-top_snapshot = `top -c -b -n1`.chomp.strip
+open_tcp_connections = coder.encode(`netstat -atun | grep tcp | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' | sort | uniq -c | sort -n`)
+top_memory_procs = coder.encode(`ps aux --sort=-rss | head -11`.chomp.strip)
+top_cpu_procs = coder.encode(`ps aux --sort=-pcpu | grep -v grep | grep -E "(^([^ ]*?)[ ]*[0-9]*[ ]*(([0-9]{1,2}\.[1-9])|([1-9]{1,2}\.[0-9])))|USER" | head -11`.chomp.strip)
+netstat = coder.encode(`netstat -a --tcp | sort`.chomp.strip)
+top_snapshot = coder.encode(`top -c -b -n1`.chomp.strip)
 
 # Determine graph color
 memused_percent = ((actual_usedmem.to_f / totalmem.to_f) * 100).round
