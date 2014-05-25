@@ -20,16 +20,16 @@ hostname = coder.encode(`hostname`)
 load_avg = coder.encode(`uptime | awk -F'average(s)?:' '{print $2}'`)
 
 # Memory usage
-totalmem = coder.encode(`free -m | grep Mem: | awk '{print $2}'`.to_i)
-usedmem = coder.encode(`free -m | grep Mem: | awk '{print $3}'`.to_i)
-cachedmem = coder.encode(`free -m | grep Mem: | awk '{print $7}'`.to_i)
-memused = coder.encode(`free -m | grep buffers/cache: | awk '{print $3}'`.to_i)
-actual_usedmem = coder.encode(usedmem - cachedmem)
-actual_freemem = coder.encode(totalmem - actual_usedmem)
+totalmem = `free -m | grep Mem: | awk '{print $2}'`.to_i
+usedmem = `free -m | grep Mem: | awk '{print $3}'`.to_i
+cachedmem = `free -m | grep Mem: | awk '{print $7}'`.to_i
+memused = `free -m | grep buffers/cache: | awk '{print $3}'`.to_i
+actual_usedmem = usedmem - cachedmem
+actual_freemem = totalmem - actual_usedmem
 
 php_procs = coder.encode(`ps -ef | grep -v grep | grep -c php`)
 httpd_procs = coder.encode(`ps -ef|grep -v grep|grep -c httpd`)
-tcp_connections = coder.encode(`netstat -nat | grep tcp | awk '{ print $5}' | cut -d: -f1 | sed -e '/^$/d' | uniq | wc -l`)
+tcp_connections = `netstat -nat | grep tcp | awk '{ print $5}' | cut -d: -f1 | sed -e '/^$/d' | uniq | wc -l`
 
 open_tcp_connections = coder.encode(`netstat -atun | grep tcp | awk '{print $5}' | cut -d: -f1 | sed -e '/^$/d' | sort | uniq -c | sort -n`)
 top_memory_procs = coder.encode(`ps aux --sort=-rss | head -11`.chomp.strip)
